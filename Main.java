@@ -8,10 +8,12 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 
-
+//Définition de la classe principale et de la méthode main.
 public class Main {
     public static void main(String[] args) {
-       
+        
+
+       // Création et affichage de la fenêtre graphique.
         SwingUtilities.invokeLater(() -> {
             FenetreUI fenetre = new FenetreUI();
             fenetre.setVisible(true);
@@ -19,15 +21,19 @@ public class Main {
     }
 }
 
-
-
+//Définition de la classe FenetreUI avec une image, un bouton et un tableau.
 class FenetreUI extends JFrame {
     private JLabel imageLabel;
     private JButton bouton;
     private JTable tableau;
 
-   
+    
+
+    //Constructeur de la fenêtre graphique.
     public FenetreUI() {
+
+
+        //Configuration de la fenêtre (titre, taille, fermeture, position et disposition).
         setTitle("Interface Graphique - 10000 Codeurs");
         setSize(600, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,8 +41,12 @@ class FenetreUI extends JFrame {
         setLayout(new BorderLayout());
 
        
+
+       //Création d'un panneau en haut avec un alignement en ligne.
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout());
+
+        //Affichage d'une image ou d'un message d'erreur si elle est absente.
         String imagePath = "./image/10000Codeurs.jpg";
         File imageFile = new File(imagePath);
         if (imageFile.exists()) {
@@ -45,10 +55,15 @@ class FenetreUI extends JFrame {
             imageLabel = new JLabel("Image non trouvée !");
             imageLabel.setForeground(Color.RED);
         }
+
+        //Ajout de l’image dans le panneau supérieur.
         topPanel.add(imageLabel);
         add(topPanel, BorderLayout.NORTH);
 
        
+
+
+       //Définition des colonnes et des données du tableau.
         String[] columns = {"ID", "Nom", "Âge", "Formation"};
         Object[][] data = {
             {"1", "AICHA", "30", "Développement Web"},
@@ -58,24 +73,34 @@ class FenetreUI extends JFrame {
             {"5", "RASSIL", "27", "Intelligence Artificielle"}
         };
         
+
+        //Création du modèle et du tableau avec les données.
         DefaultTableModel model = new DefaultTableModel(data, columns);
         tableau = new JTable(model);
+
+        //Personnalisation de l’apparence du tableau.
         tableau.setRowHeight(30);
         tableau.setFont(new Font("Arial", Font.PLAIN, 14));
         tableau.setGridColor(Color.LIGHT_GRAY);
         
-     
+        
+     //Centrage du texte dans toutes les colonnes.
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < tableau.getColumnCount(); i++) {
             tableau.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
 
+
+      //Personnalisation de l’en-tête du tableau.
+      
         JTableHeader header = tableau.getTableHeader();
         header.setFont(new Font("Arial", Font.BOLD, 16));
         header.setBackground(new Color(0, 102, 204)); 
         header.setForeground(Color.WHITE);
         
+
+        //Alternance des couleurs des lignes du tableau.
         
         tableau.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
@@ -90,18 +115,27 @@ class FenetreUI extends JFrame {
             }
         });
 
+        //Ajout du tableau avec un défilement vertical.
+
         add(new JScrollPane(tableau), BorderLayout.CENTER);
 
+        
+
+        //Création et personnalisation du bouton.
         bouton = new JButton("Rejoindre la formation");
         bouton.setFont(new Font("Arial", Font.BOLD, 14));
         bouton.setBackground(Color.BLUE);
         bouton.setForeground(Color.WHITE);
+
+        //Ajout d’un message lorsque le bouton est cliqué.
         bouton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null, "Bienvenue chez 10000 Codeurs !");
             }
         });
+
+        //Ajout du bouton dans un panneau en bas de la fenêtre.
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.add(bouton);
